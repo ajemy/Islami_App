@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SouraNameWidget extends StatelessWidget {
- final SouraData souraData;
+  final SouraData souraData;
 
-
-  const SouraNameWidget(
-      {super.key, required this.souraData});
+  const SouraNameWidget({super.key, required this.souraData});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,6 @@ class SouraNameWidget extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }
 
