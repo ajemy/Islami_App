@@ -165,11 +165,13 @@ class _QuranViewState extends State<QuranView> {
               return InkWell(
                 onTap: () {
                   Navigator.pushNamed(
-                      context, QuranDetailView.quranDetailViewRoute,
-                      arguments: {
-                        "index": index,
-                        "souraName": QuranView.listOfSouraName[index],
-                      });
+                    context,
+                    QuranDetailView.quranDetailViewRoute,
+                    arguments: SouraData(
+                      index: index+1,
+                      souraName: QuranView.listOfSouraName[index],
+                    ),
+                  );
                   setState(() {});
                 },
                 child: SouraNameWidget(
