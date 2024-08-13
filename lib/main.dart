@@ -8,9 +8,11 @@ import 'package:islamy/modules/hadith/hadith_detail_view.dart';
 import 'package:islamy/modules/quran/quran_detail_view.dart';
 import 'package:islamy/modules/splash/splash_view.dart';
 import 'package:islamy/core/setting_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: ( context)=>SettingProvider(),
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,14 +21,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var provider = SettingProvider();
+    var provider = Provider.of<SettingProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode:ThemeMode.light ,
+      themeMode:provider.currentMode ,
       title: 'Flutter Demo',
       localizationsDelegates:AppLocalizations.localizationsDelegates,
       supportedLocales:AppLocalizations.supportedLocales,
-      theme: AppThemeManger.darkThemeData,
+      theme: AppThemeManger.lightThemeData,
       darkTheme: AppThemeManger.darkThemeData,
       initialRoute: "/",
       locale:  Locale(provider.currentLang),

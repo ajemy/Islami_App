@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:islamy/core/setting_provider.dart';
+import 'package:provider/provider.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var languageTranslate =AppLocalizations.of(context)!;
+    var provider = Provider.of<SettingProvider>(context);
     const List<String> lang = [
       'English',
       'عربي',
@@ -14,8 +19,6 @@ class SettingView extends StatelessWidget {
       'Light',
       'Dark',
     ];
-    var height = MediaQuery.sizeOf(context).height;
-    var width = MediaQuery.sizeOf(context).width;
     var theme = Theme.of(context);
     return Center(
         child: Padding(
@@ -24,7 +27,7 @@ class SettingView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Settings",
+            languageTranslate.settings,
             textAlign: TextAlign.center,
             style: theme.textTheme.titleLarge,
           ),
@@ -32,17 +35,29 @@ class SettingView extends StatelessWidget {
             height: 40,
           ),
             Text(
-            "Language",
-            style: theme.textTheme.bodyLarge,
+            languageTranslate.language,
+            style: theme.textTheme.bodyLarge!
+            ,
           ),
           const SizedBox(
             height: 10,
           ),
           CustomDropdown<String>(
             hintText: 'Select job role',
+            decoration:CustomDropdownDecoration(
+              closedFillColor: provider.isLight()?Colors.white :Colors.black,
+              expandedFillColor: provider.isLight()?Colors.white :Colors.black,
+
+            ) ,
             items: lang,
-            initialItem: lang[0],
+            initialItem: (provider.currentLang=="en")?lang[0]:lang[1],
             onChanged: (value) {
+              if(value=="English"){
+                provider.changeLang("en");
+              }
+              if(value=="عربي"){
+                provider.changeLang("ar");
+              }
               print('changing value to: $value');
             },
           ),
@@ -51,7 +66,7 @@ class SettingView extends StatelessWidget {
             height: 70,
           ),
           Text(
-            "Mode",
+            languageTranslate.mode,
             style: theme.textTheme.bodyLarge,
           ),
           const SizedBox(
@@ -60,8 +75,19 @@ class SettingView extends StatelessWidget {
           CustomDropdown<String>(
             hintText: 'Select job role',
             items: mode,
-            initialItem: mode[0],
+            initialItem:(provider.isLight())?mode[0]:mode[1],
+            decoration:CustomDropdownDecoration(
+              closedFillColor: provider.isLight()?Colors.white :Colors.black,
+              expandedFillColor: provider.isLight()?Colors.white :Colors.black,
+
+            ) ,
             onChanged: (value) {
+              if(value=="Light"){
+                provider.changeMode(ThemeMode.light);
+              }
+              if(value=="Dark"){
+                provider.changeMode(ThemeMode.dark);
+              }
               print('changing value to: $value');
             },
           ),

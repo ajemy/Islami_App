@@ -4,5 +4,8 @@
   "hadith": "Hadith",
   "tasbieh": "Tasbieh",
   "radio": "Radio",
-  "settings": "Settings"
+  "settings": "Settings",
+  "lang": "Arabic",
+  "language": "Language",
+  "mode": "Mode"
 }
