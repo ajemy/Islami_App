@@ -11,6 +11,15 @@ class TasbiehView extends StatefulWidget {
 }
 
 class _TasbiehViewState extends State<TasbiehView> {
+  List<String> zekr = [
+    "سبحان الله",
+    "الحمد الله",
+    "الله أكبر",
+  ];
+  int currentIndex = 0;
+  int count = 0;
+  double angle=0;
+
   @override
   void initState() {
     super.initState();
@@ -18,7 +27,6 @@ class _TasbiehViewState extends State<TasbiehView> {
 
   @override
   Widget build(BuildContext context) {
-
     var provider = Provider.of<SettingProvider>(context);
     var theme = Theme.of(context);
     return Container(
@@ -35,21 +43,28 @@ class _TasbiehViewState extends State<TasbiehView> {
               alignment: Alignment.topCenter,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 45),
+                  padding: const EdgeInsets.only(top: 45,),
+                  child: Transform.rotate(
+                    angle: angle,
+
+                    child: ImageIcon(
+                      const AssetImage("assets/icons/tasbih1.png"),
+                      size: 250,
+                      color: provider.isLight()
+                          ? const Color(0xffB7935F)
+                          : const Color(0xffFACC1D),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40),
                   child: ImageIcon(
-                    const AssetImage("assets/icons/tasbih1.png"),
-                    size: 250,
+                    const AssetImage("assets/icons/tasbih0.png"),
+                    size: 100,
                     color: provider.isLight()
                         ? const Color(0xffB7935F)
                         : const Color(0xffFACC1D),
                   ),
-                ),
-                ImageIcon(
-                  const AssetImage("assets/icons/tasbih0.png"),
-                  size: 100,
-                  color: provider.isLight()
-                      ? const Color(0xffB7935F)
-                      : const Color(0xffFACC1D),
                 ),
               ],
             ),
@@ -58,7 +73,7 @@ class _TasbiehViewState extends State<TasbiehView> {
             height: 20,
           ),
           Text(
-            "عدد التسبيحات",
+            "الذكر",
             style: theme.textTheme.bodyLarge,
           ),
           const SizedBox(
@@ -74,7 +89,7 @@ class _TasbiehViewState extends State<TasbiehView> {
                   borderRadius: BorderRadius.circular(10)),
               child: Center(
                 child: Text(
-                  "${provider.counter}",
+                  "$count",
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyMedium,
                 ),
@@ -83,24 +98,34 @@ class _TasbiehViewState extends State<TasbiehView> {
             height: 20,
           ),
           FilledButton(
-            onPressed: () {
-              provider.increaseCount();
-              setState(() {
-
-              });
-            },
-            style: FilledButton.styleFrom(
-              backgroundColor: theme.primaryColor
-            ),
-            child: Text(
-              "سبحان الله",
-              style: theme.textTheme.bodyLarge
-            )
-            ),
+              onPressed: counter,
+              style: FilledButton.styleFrom(
+                  backgroundColor: theme.primaryColor
+              ),
+              child: Text(
+                  zekr[currentIndex],
+                  style: theme.textTheme.bodyLarge
+              )
+          ),
 
         ],
       ),
     );
   }
-}
 
+  counter() {
+    angle-=10;
+    count++;
+    if (count == 34) {
+      count = 0;
+      if (currentIndex <= 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0;
+      }
+    }
+    setState(() {
+
+    });
+  }
+}
