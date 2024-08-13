@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:islamy/core/setting_provider.dart';
 import 'package:islamy/modules/hadith/hadith_view.dart';
 import 'package:islamy/modules/quran/quran_view.dart';
 import 'package:islamy/modules/radio/radio_view.dart';
 import 'package:islamy/modules/stetting_view/setting_view.dart';
 import 'package:islamy/modules/tasbieh/tasbieh.dart';
+import 'package:provider/provider.dart';
 
 class LayoutView extends StatefulWidget {
   static String routeName = "layout";
@@ -16,6 +18,7 @@ class LayoutView extends StatefulWidget {
 }
 
 class _LayoutViewState extends State<LayoutView> {
+
   int currentIndex = 0;
   List<Widget> itemView=[
     const QuranView(),
@@ -28,12 +31,14 @@ class _LayoutViewState extends State<LayoutView> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<SettingProvider>(context);
+
     var lang =AppLocalizations.of(context)!;
     return Container(
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         image: DecorationImage(
             image: AssetImage(
-              "assets/images/home_dark_bg.png",
+                provider.getBackgroundImage()
             ),
             fit: BoxFit.fill),
       ),

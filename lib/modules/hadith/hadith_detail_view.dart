@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:islamy/core/setting_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamy/modules/hadith/hadith_view.dart';
+import 'package:provider/provider.dart';
 
 class HadithDetailView extends StatefulWidget {
-  static String hadithDetailViewRoute ="hadithView";
+  static String hadithDetailViewRoute = "hadithView";
+
   const HadithDetailView({super.key});
 
   @override
@@ -10,26 +14,35 @@ class HadithDetailView extends StatefulWidget {
 }
 
 class _HadithDetailViewState extends State<HadithDetailView> {
-
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<SettingProvider>(context);
+    var lang = AppLocalizations.of(context)!;
     ThemeData theme = Theme.of(context);
-    HadithDetail hadithDetail = ModalRoute.of(context)?.settings.arguments as HadithDetail;
-    return  Container(
-      decoration: const BoxDecoration(
+    HadithDetail hadithDetail =
+    ModalRoute
+        .of(context)
+        ?.settings
+        .arguments as HadithDetail;
+    return Container(
+      decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage("assets/images/default_bg.png"),
+            image: provider.isLight() ? const AssetImage(
+                "assets/images/default_bg.png") : const AssetImage(
+                "assets/images/home_dark_bg.png"),
             fit: BoxFit.fill),
       ),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("إسلامي"),
+          title: Text(lang.islamy),
         ),
         body: Container(
           margin:
           const EdgeInsets.only(top: 20, bottom: 50, left: 30, right: 30),
           decoration: BoxDecoration(
-            color: const Color(0xffF8F8F8).withOpacity(0.85),
+            color: provider.isLight()
+                ? const Color(0xffF8F8F8).withOpacity(0.85)
+                : const Color(0xff141A2E).withOpacity(0.85),
             borderRadius: BorderRadius.circular(25),
           ),
           child: Column(
@@ -38,8 +51,11 @@ class _HadithDetailViewState extends State<HadithDetailView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                      hadithDetail.hadithTitle,
-                    style: theme.textTheme.bodyMedium,
+                    hadithDetail.hadithTitle,
+                    style: theme.textTheme.bodyMedium!.copyWith(
+                      color: provider.isLight() ? Colors.white : const Color(
+                          0xffFACC1D),
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(
@@ -58,7 +74,15 @@ class _HadithDetailViewState extends State<HadithDetailView> {
               Expanded(
                 child: ListView(
                   children: [
-                    Text(hadithDetail.hadithBody,textAlign: TextAlign.center,),
+                    Text(
+                      hadithDetail.hadithBody,
+                      style: theme.textTheme.bodySmall!.copyWith(
+                          color: provider.isLight()
+                              ? Colors.white
+                              : const Color(0xffFACC1D)
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               )
@@ -66,6 +90,7 @@ class _HadithDetailViewState extends State<HadithDetailView> {
           ),
         ),
       ),
-    );;
+    );
+    ;
   }
 }

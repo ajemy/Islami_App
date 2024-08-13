@@ -68,6 +68,12 @@ class AppThemeManger {
       primaryColor: darkPrimaryColor,
       appBarTheme: const AppBarTheme(
           backgroundColor: Colors.transparent,
+          titleTextStyle: TextStyle(
+            fontSize: 30,
+            fontFamily: "El Messiri",
+            fontWeight: FontWeight.bold,
+            color: Color(0xffF8F8F8),
+          ),
           centerTitle: true,
       ),
       scaffoldBackgroundColor: Colors.transparent,
@@ -122,7 +128,7 @@ class AppThemeManger {
         showUnselectedLabels: false,
       ),
       dividerTheme: const DividerThemeData(
-        color: primaryColor
+        color: darkPrimaryColor
       )
   );
 
